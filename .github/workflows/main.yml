@@ -2,11 +2,12 @@ name: Daily Stock Analysis
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main ]
   schedule:
-    - cron: '0 0 * * *'
+    - cron: '0 0 * * *'    # 한국 시간 09:00
+    - cron: '0 8 * * *'    # 한국 시간 17:00
+    - cron: '30 13 * * *'  # 한국 시간 22:30
+
 
 jobs:
   build:
