@@ -19,9 +19,7 @@ jobs:
           python-version: '3.9'
       - name: Install dependencies
         run: |
-          pip install --upgrade pip
           pip install yfinance pandas gspread oauth2client
-          pip install pandas_ta --no-cache-dir
       - name: Run script
         run: python analysis.py
         env:
