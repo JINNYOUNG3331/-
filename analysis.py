@@ -24,18 +24,15 @@ def analyze_smart_ticker(ticker):
         avg_vol_20 = hist_1y['Volume'].rolling(window=20).mean().iloc[-1]
         current_vol = hist_1y['Volume'].iloc[-1]
         
-        # 필터링
-        if current_price < avg_1y * 0.95 or (current_vol / avg_vol_20) < 0.8: return None
-        
+        # 수정된 필터링: 거래량 65%, RSI 45로 완화
+        if current_price < avg_1y * 0.95 or (current_vol / avg_vol_20) < 0.65: return None
         rsi = calculate_rsi(hist_1y['Close']).iloc[-1]
-        if not (20 <= rsi <= 40): return None
+        if not (20 <= rsi <= 45): return None
         
-        # 모멘텀 점수 (최대 3점)
         news = stock.news
         score = sum(1 for item in news[:5] if any(w in item['title'].lower() for w in ['growth', 'innovation', 'approval', 'partnership', 'beat']))
         score = min(score, 3)
         
-        # 등급 부여
         if score == 3: grade = "강력 매수"
         elif score >= 1: grade = "매수"
         else: grade = "중립"
@@ -61,12 +58,11 @@ def start_analysis():
     
     with open('nasdaq_list.txt', 'r') as f: tickers = f.read().split()
     
-    # 병렬 처리 실행
     with ThreadPoolExecutor(max_workers=20) as executor:
         results = list(executor.map(analyze_smart_ticker, tickers))
     
-    # 결과 정렬: 강력매수 우선
     valid_results = [r for r in results if r is not None]
+    # '강력 매수' 우선 정렬
     valid_results.sort(key=lambda x: (x['grade'] == '강력 매수', x['grade'] == '매수'), reverse=True)
     final_list = valid_results[:15]
     
