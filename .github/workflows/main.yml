@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
     - cron: '0 8 * * *'
@@ -14,13 +15,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Python
+      - name: Set up Python 3.9
         uses: actions/setup-python@v2
         with:
           python-version: '3.9'
       - name: Install dependencies
         run: |
-          pip install yfinance pandas_ta gspread oauth2client
+          pip install yfinance pandas pandas_ta gspread oauth2client
       - name: Run script
         run: python analysis.py
         env:
