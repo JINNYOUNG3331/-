@@ -7,8 +7,6 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * *'
-    - cron: '0 8 * * *'
-    - cron: '30 13 * * *'
 
 jobs:
   build:
@@ -21,7 +19,7 @@ jobs:
           python-version: '3.9'
       - name: Install dependencies
         run: |
-          pip install yfinance pandas gspread oauth2client
+          pip install yfinance pandas gspread oauth2client pandas_ta
       - name: Run script
         run: python analysis.py
         env:
