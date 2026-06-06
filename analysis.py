@@ -8,7 +8,6 @@ Original file is located at
 """
 
 import yfinance as yf
-import pandas_ta as ta
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import time
