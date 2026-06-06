@@ -21,8 +21,7 @@ jobs:
           python-version: '3.9'
       - name: Install dependencies
         run: |
-          pip install yfinance pandas gspread oauth2client
-          pip install git+https://github.com/twopirllc/pandas-ta.git
+          pip install yfinance pandas gspread oauth2client pandas_ta
       - name: Run script
         run: python analysis.py
         env:
