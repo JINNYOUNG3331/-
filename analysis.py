@@ -14,7 +14,8 @@ def calculate_rsi(series, period=14):
 
 def analyze_smart_ticker(ticker):
     try:
-        ticker = ticker.replace("^", "-").replace("/", "-")
+        ticker = ticker.replace("
+^", "-").replace("/", "-")
         stock = yf.Ticker(ticker)
         hist_1y = stock.history(period="1y")
         if len(hist_1y) < 200: return None
